@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.helmetproject.mapper.UserMapper">
+
+    <resultMap id="UserInfo" type="com.example.helmetproject.dto.User">
+        <result property="userId" column="user_id"/>
+        <result property="userName" column="user_name"/>
+        <result property="userSsn" column="user_ssn"/>
+        <result property="userBirth" column="user_birth"/>
+        <result property="userPhoneNumber" column="user_phone_number"/>
+        <result property="userBloodType" column="user_blood_type"/>
+        <result property="userWorkLocation" column="user_work_location"/>
+        <result property="userWorkCondition" column="user_work_condition"/>
+        <result property="userHelmetCondition" column="user_helmet_wearing"/>
+    </resultMap>
+
+    <!--  노동자 등록  -->
+    <insert id="createUser" parameterType="com.example.helmetproject.dto.User">
+        INSERT INTO user (
+            user_id,
+            user_ssn,
+            user_name,
+            user_work_location,
+            user_birth,
+            user_blood_type,
+            user_phone_number,
+            user_work_condition
+        )
+        values (#{userId},
+                #{userSsn},
+                #{userName},
+                #{userWorkLocation},
+                #{userBirth},
+                #{userBloodType},
+                #{userPhoneNumber},
+                #{userWorkCondition}
+               )
+    </insert>
+
+    <!-- 특정 노동자 조회 -->
+    <select id="findUser" resultMap="UserInfo">
+        SELECT *
+        FROM user
+        where user_id = #{userId}
+    </select>
+
+    <!-- 모든 노동자 조회 -->
+    <select id="findAll" parameterType="com.example.helmetproject.dto.User" resultType="Map">
+        SELECT *
+        FROM user
+    </select>
+
+    <!-- 노동자 출근 등록 -->
+    <insert id="userWork" parameterType="com.example.helmetproject.dto.UserWorkHistory">
+        insert into user_work(
+                              user_id,
+                              user_name,
+                              user_department,
+                              user_work_date
+        )values (
+                 #{userId},
+                 #{userName},
+                 #{userDepartment},
+                 #{userWorkDate}
+                        )
+
+    </insert>
+
+</mapper>

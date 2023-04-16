@@ -1,0 +1,223 @@
+<!DOCTYPE HTML>
+<!--
+	Strongly Typed by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+	<head>
+	<META HTTP-EQUIV="refresh" CONTENT="1">
+	 <title>Start</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="assets/css/main.css" />
+		<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+        <script type="text/javascript" src="assets/js/start.js">
+        </script>
+
+    <script>
+        function refresh(){  
+      $(div.left-box).load(window.location.href + div.left-box);
+}</script>
+       
+        
+        
+       
+ 
+    	<style>
+        tr, td{
+            border-style : solid;
+        }
+            .look_helmet{
+               border-style : solid; 
+            }
+            div{
+            width:100%;
+
+        }
+            div.left-box {
+            float:left;
+            width:100%;
+            border-top: 0.5px solid#888;
+            border-bottom: 0px;
+            border-right: 0.5px dashed#888;
+            border-left: 0px;
+            box-sizing: border-box;
+        }
+             
+            div.work_inst{
+            text-align: center;
+            border-top: 0px;
+            border-bottom: 1px dashed#888;
+            border-right: 0px;
+            border-left: 0px;
+        }
+        </style>
+        
+	</head>
+	<body class="homepage is-preload" >
+		<div id="page-wrapper">
+
+			<!-- Header -->
+				<section id="header">
+					<div class="container">
+						<!-- Logo -->
+							<h1 id="logo"><a href="Start.html">Control System</a></h1>
+						<!-- Nav -->
+							<nav id="nav">
+								<ul>
+									<li><a class="icon solid fa-home" href="main.html"><span>Main_Home</span></a></li>
+									
+									<li><a class="icon solid fa-retweet" href="Start.html"><span>Start Control System</span></a></li>
+									
+									<li><a class="icon solid fa-sitemap" href="Input_Worker.html"><span>EDIT _or_INPUT_HELMET↔WORKER</span></a></li>
+									<li>
+										<a href="#" class="icon solid fa-cog"><span>Helmet..</span></a>
+										<ul>
+											<li><a href="Register_Helmet.html">Regist_Helmet</a></li>
+											<li><a href="lookHelmet.html">Look_Helmets</a></li>
+										</ul>
+									</li>
+									<li><a class="icon solid fa-cog" ><span>Worker..</span></a>
+									<ul>
+											<li><a href="Register_User.html">Regist_Worker</a></li>
+											<li><a href="lookUser.html">Look_Workers</a></li>
+										</ul></li>
+									
+									
+								</ul>
+							</nav>
+
+					</div>
+				</section>
+
+			<!-- Features -->
+
+<form>
+<div class='left-box'>
+<table class = "look_helmet" border="1" bordercolor="blue" width ="600" height="200" align = "center" >
+    <tr bgcolor="red" align ="center">
+        <p><strong><td colspan = "7" span style="color: whitesmoke; font-size:25pt" >상황발생 리스트</td></strong></p>
+    </tr>
+    
+    <tr class="look_log" align = "center" bgcolor="skyblue">
+    
+        <td><strong>Helmet<br>ID</strong></td>
+	<td><strong>Worker<br>Name</strong></td>
+	<td><strong>Work<br>Location</strong></td>
+	<td><strong>SHOCK<br>Information</strong></td>
+	<td><strong>Wearing<br>Information</strong></td>
+	<td><strong>Location<br>Information</strong></td>
+    <td><br>
+    <input type="button" value="Search GPS"
+           style="float:right" onclick="Location_Inf();"></td>
+    <!-- <input type="button" value="Location_Inf"
+           style="float:right" onclick="Location_Inf();">
+           -->
+
+    </tr>
+
+    <tbody id="look_inf_list">
+    <!-- 삽입되는 발생 리스트 -->
+
+    </tbody>
+    </table>
+    </div>
+    
+        <script>
+            let lookData;
+			
+            window.onload=function()
+            {
+       
+                
+
+                axios.get
+                ("http://220.81.42.179:8080/api/live")
+                    .then(function (response) {
+                        lookData=response.data;
+                        console.log(response.data);
+                        makeList_start();
+                    })
+                    .catch(function (error){
+
+                        console.log(error);
+                    });
+
+            }
+            function makeList_start() {
+                let looklist_tbody = document.getElementById('look_inf_list');
+                if(looklist_tbody.rows.length <1) {
+                    for (let i = 0; i < lookData.length; i++) {
+
+                        let row = looklist_tbody.insertRow(looklist_tbody.rows.length);
+                        let cell1 = row.insertCell(0);
+                        let cell2 = row.insertCell(1);
+                        let cell3 = row.insertCell(2);
+                        let cell4 = row.insertCell(3);
+                        let cell5 = row.insertCell(4);
+                        let cell6 = row.insertCell(5);
+                        let cell7 = row.insertCell(6);
+                        //------
+                        let helmetId = lookData[i].helmetId;
+                        let workernamed = lookData[i].userName;
+                        let workerlocation = lookData[i].workLocation;
+                        let shock_inf = lookData[i].shockPosition;
+                        let wearing_inf = lookData[i].wearingInfo;
+                        let location_inf_latitude = lookData[i].locationX;
+                        let location_inf_longitude = lookData[i].locationY;
+						let shock_position = lookData[i].shock
+                        //--
+                        cell1.innerHTML = helmetId;
+                        cell2.innerHTML = workernamed;
+                        cell3.innerHTML = workerlocation;
+                        cell4.innerHTML = shock_inf + " : "+shock_position;
+                        cell5.innerHTML = wearing_inf;
+                        cell6.innerHTML = location_inf_latitude +
+                            "," + location_inf_longitude;
+                        cell7.innerHTML =
+                            `<input type="button" value="Location_Inf"
+           style="float:right" onclick="Location_Inf();">`;
+                       }
+                }
+                else if(looklist_tbody>1)
+                {
+                    while(1)
+                    {
+                        if(looklist_tbody>1)
+                        {
+                            looklist_tbody.deleteRow(looklist_tbody.rows.length - 1);
+                        }
+                        else
+                            break;
+                    }
+                }
+
+            }
+            
+           
+            
+        </script>
+
+
+
+
+
+
+
+
+</form>
+
+			
+
+		<!-- Scripts -->
+			<script src="assets/js/jquery.min.js"></script>
+			<script src="assets/js/jquery.dropotron.min.js"></script>
+			<script src="assets/js/browser.min.js"></script>
+			<script src="assets/js/breakpoints.min.js"></script>
+			<script src="assets/js/util.js"></script>
+			<script src="assets/js/main.js"></script>
+			
+
+	</body>
+</html>

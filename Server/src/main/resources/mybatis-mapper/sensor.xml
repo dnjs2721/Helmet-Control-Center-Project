@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.helmetproject.mapper.SensorMapper">
+
+    <resultMap id="shockInfo" type="com.example.helmetproject.dto.ShockSensor">
+        <result property="helmetId" column="helmet_Id"/>
+        <result property="shockDataLeft" column="shock_data_left"/>
+        <result property="shockDataRight" column="shock_data_right"/>
+        <result property="shockDataCenter" column="shock_data_center"/>
+        <result property="shockDataBack" column="shock_data_back"/>
+        <result property="shockDataFront" column="shock_data_front"/>
+
+    </resultMap>
+
+    <!--  충격 감지 센서  -->
+    <insert id="shockSensor" parameterType="com.example.helmetproject.dto.ShockSensor">
+        INSERT INTO shocksensor(
+                                helmet_Id,
+                                shock_data_left,
+                                shock_data_right,
+                                shock_data_center,
+                                shock_data_back,
+                                shock_data_front
+        )
+        values (#{helmetId},
+                #{shockDataLeft},
+                #{shockDataRight},
+                #{shockDataCenter},
+                #{shockDataBack},
+                #{shockDataFront}
+               )
+    </insert>
+    <!--  착용 감지 센서  -->
+    <insert id="wearingSensor" parameterType="com.example.helmetproject.dto.WearingSensor">
+        INSERT INTO wearingsensor(
+                                  helmet_id,
+                                  wear_condition,
+                                  create_date
+        )values(
+                #{helmetId},
+                #{wearingCondition},
+                #{date}
+                       )
+    </insert>
+
+    <insert id="gpsSensor" parameterType="com.example.helmetproject.dto.GpsSensor">
+        INSERT INTO gps(
+                        helmet_id,
+                        latitude,
+                        longitude,
+                        date
+        )values(
+                #{helmetId},
+                #{latitude},
+                #{longitude},
+                #{date}
+                       )
+    </insert>
+    
+    <insert id="sosSensor" parameterType="com.example.helmetproject.dto.SosSensor">
+        INSERT INTO sos(
+                        helmet_id,
+                        sos_condition,
+                        sos_time
+        )values (
+                 #{helmetId},
+                 #{SosCondition},
+                 #{date}
+                        )
+    </insert>
+
+    <select id="getHelmetInfo" parameterType="com.example.helmetproject.dto.Helmet">
+        SELECT *
+        FROM helmet
+        where helmet_id = #{helmetId};
+    </select>
+
+    <update id="userHelmetConditionUpdate">
+        UPDATE user
+        SET user_helmet_wearing = #{wearingCondition}
+        WHERE user_id = #{userId}
+    </update>
+
+    <update id="helmetUpdateGps">
+        UPDATE helmets
+        SET  helmet_latitude = #{latitude}, helmet_longitude=#{longitude}
+        WHERE helmet_id = #{helmetId}
+    </update>
+</mapper>

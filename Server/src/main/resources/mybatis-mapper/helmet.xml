@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.helmetproject.mapper.HelmetMapper">
+
+    <resultMap id="helmetInfo" type="com.example.helmetproject.dto.Helmet">
+        <result property="helmetId" column="helmet_Id"/>
+        <result property="helmetModelName" column="helmet_name"/>
+        <result property="helmetMakeDate" column="helmet_make_date"/>
+        <result property="helmetBuyDate" column="helmet_buy_date"/>
+        <result property="helmetPrice" column="helmet_price"/>
+        <result property="helmetCondition" column="helmet_condition"/>
+        <result property="helmetLatitude" column="helmet_latitude"/>
+        <result property="helmetLongitude" column="helmet_longitude"/>
+
+    </resultMap>
+
+    <!--  헬멧 등록  -->
+    <insert id="infoInsert" parameterType="com.example.helmetproject.dto.Helmet">
+        INSERT INTO helmets (
+            helmet_id,
+            helmet_name,
+            helmet_make_date,
+            helmet_buy_date,
+            helmet_price
+        )
+        values (#{helmetId},
+                #{helmetModelName},
+                #{helmetMakeDate},
+                #{helmetBuyDate},
+                #{helmetPrice}
+               )
+    </insert>
+
+    <select id="getHelmetData" parameterType="com.example.helmetproject.dto.Helmet" resultType="java.util.HashMap">
+        SELECT *
+        FROM helmets
+    </select>
+
+    <select id="getHelmetInfo" resultMap="helmetInfo">
+        SELECT *
+        FROM helmets
+        where helmet_id = #{helmetId}
+    </select>
+
+</mapper>

@@ -1,0 +1,337 @@
+<!DOCTYPE HTML>
+<!--
+	Strongly Typed by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+	<head>
+	 <title>Edit_or_Input_PAGE</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="assets/css/main.css" />
+        <script type="text/javascript" src="assets/js/inputwork.js"></script>
+		
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <style>
+        div{
+            width:100%;
+
+        }
+        div.left-box {
+            float:left;
+            width:40%;
+            border-top: 0.5px solid#888;
+            border-bottom: 0px;
+            border-right: 0.5px dashed#888;
+            border-left: 0px;
+            box-sizing: border-box;
+        }
+        div.left-box2 {
+            float:left;
+            width:46.5%;
+            border-top: 0.5px solid#888;
+            border-bottom: 0px;
+            border-right: 0px;
+            border-left: 0;
+            box-sizing: border-box;
+        }
+
+
+         div.right-box {
+            float:right;
+            width:13.5%;
+            border-top: 0.5px solid#888;
+            border-bottom: 0px;
+            border-right: 0px;
+            border-left: 0.5px solid#888;
+             box-sizing: border-box;
+        }
+        
+        div.work_inst{
+            text-align: center;
+            border-top: 0px;
+            border-bottom: 1px dashed#888;
+            border-right: 0px;
+            border-left: 0px;
+        }
+        #thick {
+  border-width: 6px 10px 2px 20px ;
+  border-style: solid;
+}
+        
+        </style>
+	</head>
+	<body class="homepage is-preload">
+		<div id="page-wrapper">
+
+			<!-- Header -->
+				<section id="header">
+					<div class="container">
+						<!-- Logo -->
+							<h1 id="logo"><a href="lookHelmet.html">LOOK <br><br>Workers</a></h1>
+						<!-- Nav -->
+							<nav id="nav">
+								<ul>
+									<li><a class="icon solid fa-home" href="main.html"><span>Main_Home</span></a></li>
+									
+									<li><a class="icon solid fa-retweet" href="Start.html"><span>Start Control System</span></a></li>
+									
+									<li><a class="icon solid fa-sitemap" href="Input_Worker.html"><span>EDIT _or_INPUT_HELMET↔WORKER</span></a></li>
+									<li>
+										<a href="#" class="icon solid fa-cog"><span>Helmet..</span></a>
+										<ul>
+											<li><a href="Register_Helmet.html">Regist_Helmet</a></li>
+											<li><a href="lookHelmet.html">Look_Helmets</a></li>
+										</ul>
+									</li>
+									<li><a class="icon solid fa-cog" ><span>Worker..</span></a>
+									<ul>
+											<li><a href="Register_User.html">Regist_Worker</a></li>
+											<li><a href="lookUser.html">Look_Workers</a></li>
+										</ul></li>
+									
+									
+								</ul>
+							</nav>
+
+					</div>
+				</section>
+
+			<!-- Features -->
+
+<form >
+<div class='left-box'>
+   <br>
+    <p><input type="button" value="Load_Helmet_Inf" style="float:right" onclick="load_Helmet_Inf();"></p><br>
+
+   <table class = "look_helmet" border="1" bordercolor="blue" width ="" height="" align = "" >
+    <tr bgcolor="gray" align ="center">
+        <td colspan = "6" span style="color:white">헬멧 보유 현황</td>
+       
+    </tr>
+    
+    <tr align = "center" bgcolor="skybule">
+    
+   <td><strong>ID<br>NUMBER</strong></td>
+	<td><strong>Model<br>Name</strong></td>
+	<td><strong>Manufacture<br>Date</strong></td>
+	<td><strong>Purchase<br>Date</strong></td>
+	<td><strong>Helmet<br>Price</strong></td>
+	<td><strong>　Use　</strong></td>
+    </tr>
+
+    <tbody id="helmet_inf_list">
+    <!-- 삽입되는 헬멧 리스트 -->
+
+    </tbody>
+        <script>
+            
+
+            // http://localhost:8080/api/helmet
+            function load_Helmet_Inf()
+            {
+                axios.get
+                ("http://220.81.42.179:8080/api/helmet")
+                    .then(function (response) {
+                        helmetData=response.data;
+                        console.log(response.data);
+                        makeList1();
+                    })
+                    .catch(function (error){
+
+                        console.log(error);
+                    });
+
+            }
+            function makeList1() {
+                let helmetlist_tbody = document.getElementById('helmet_inf_list');
+                if(helmetlist_tbody.rows.length <1) {
+                    for (let i = 0; i < helmetData.length; i++) {
+
+                        let row = helmetlist_tbody.insertRow(helmetlist_tbody.rows.length);
+                        let cell1 = row.insertCell(0);
+                        let cell2 = row.insertCell(1);
+                        let cell3 = row.insertCell(2);
+                        let cell4 = row.insertCell(3);
+                        let cell5 = row.insertCell(4);
+                        let cell6 = row.insertCell(5);
+                        //------
+                        let helmetid = helmetData[i].helmet_id;
+                        let helmetnamed = helmetData[i].helmet_name;
+                        let helmetmaked = helmetData[i].helmet_make_date;
+                        let helmetbuyed = helmetData[i].helmet_buy_date;
+                        let helmetpriced = helmetData[i].helmet_price;
+                        let helmetusing = helmetData[i].helmet_condition;
+                        //--
+                        cell1.innerHTML = helmetid;
+                        cell2.innerHTML = helmetnamed;
+                        cell3.innerHTML = helmetmaked;
+                        cell4.innerHTML = helmetbuyed;
+                        cell5.innerHTML = helmetpriced;
+                        cell6.innerHTML = helmetusing;
+                       }
+                }
+                else if(helmetlist_tbody>1)
+                {
+                    while(1)
+                    {
+                        if(helmetlist_tbody>1)
+                        {
+                            helmetlist_tbody.deleteRow(helmetlist_tbody.rows.length - 1);
+                        }
+                        else
+                            break;
+                    }
+                }
+
+            }
+        </script>
+
+
+
+
+
+
+    </table></div>
+
+  <div class='left-box2'>
+     <br>
+      <input type="button" value="Load_Worker_Inf" style="float:right"  onclick="Load_Worker_Inf();">
+<table class = "look_worker" border="1" bordercolor="blue" width ="" height="" align = "top"> 　
+    <tr bgcolor="gray" align ="center">
+        <p><td colspan = "8" span style="color:white">작업자 등록 현황</td></p>
+       
+    </tr>
+    
+    <tr align = "center" bgcolor="skybule">
+    <td><strong>Worker<br>Number</strong></td>
+    <td><strong>Name</strong></td>
+	<td><strong>　　　Ssn　　　</strong></td>
+	<td><strong>BrithDay</strong></td>
+	<td><strong>Phone<br>Number</strong></td>
+	<td><strong>BloodType</strong></td>
+	<td><strong>Work<br>Location</strong></td>
+	<td><strong>Using<br>Helmet</strong></td>
+    </tr>
+
+    <tbody id="Load_Worker_Inf">
+    <!-- 삽입되는 헬멧 리스트 -->
+
+    </tbody>
+        <script>
+          
+
+            // http://localhost:8080/api/helmet
+            function Load_Worker_Inf()
+            {
+                axios.get
+                ("http://220.81.42.179:8080/api/user/findAll")
+                    .then(function (response) {
+                        workerData=response.data;
+                        console.log(response.data);
+                        makeList();
+                    })
+                    .catch(function (error){
+
+                        console.log(error);
+                    });
+
+            }
+            function makeList() {
+                let workerlist_tbody = document.getElementById('Load_Worker_Inf');
+                if(workerlist_tbody.rows.length <1) {
+                    for (let i = 0; i < workerData.length; i++) {
+
+                        let row = workerlist_tbody.insertRow(workerlist_tbody.rows.length);
+                       let cell1 = row.insertCell(0);
+                        let cell2 = row.insertCell(1);
+                        let cell3 = row.insertCell(2);
+                        let cell4 = row.insertCell(3);
+                        let cell5 = row.insertCell(4);
+                        let cell6 = row.insertCell(5);
+                        let cell7 = row.insertCell(6);
+                        let cell8 = row.insertCell(7);
+                        //------
+                        let user_id = workerData[i].user_id;
+                        let user_name = workerData[i].user_name;
+                        let user_ssn = workerData[i].user_ssn;
+                        let user_birth = workerData[i].user_birth;
+                        let user_phone_number = workerData[i].user_phone_number;
+                        let user_blood_type = workerData[i].user_blood_type;
+                        let user_work_location = workerData[i].user_work_location;
+                        let user_work_condition = workerData[i].user_work_condition;
+                        //--
+                        cell1.innerHTML = user_id;
+                        cell2.innerHTML = user_name;
+                        cell3.innerHTML = user_ssn;
+                        cell4.innerHTML = user_birth;
+                        cell5.innerHTML = user_phone_number;
+                        cell6.innerHTML = user_blood_type;
+                        cell7.innerHTML = user_work_location;
+                        cell8.innerHTML = user_work_condition;
+
+          
+                    }
+                }
+                else if(workerlist_tbody>1)
+                {
+                    while(1)
+                    {
+                        if(workerlist_tbody>1)
+                        {
+                            workerlist_tbody.deleteRow(workerlist_tbody.rows.length - 1);
+                        }
+                        else
+                            break;
+                    }
+                }
+
+            }
+        </script>
+   <tbody id="workerlisg">
+
+    </tbody>
+
+          </table></div>
+          <div class='right-box'>
+            
+             <div class='work_inst'>
+              <font size="6em" color="black" 
+              ><br><strong>WORK<br>INSTRUCTION</strong></font><br><br></div>
+              
+     <strong>[ Helmet I D ]</strong>
+<p align="right"><input type="text" placeholder="헬멧 I D" value="" size="7" maxlength="" 
+id="helmet_id"></p>
+<strong>[ Usrnumber ]</strong>
+<p align="right"><input type="text" placeholder="노동자 번호" value="" size="7" maxlength=""
+id="userNumber"></p>
+<p align="right"><input type="button" value="INSTRUCT" style = "float:right" onclick="work_Instruct();"></p>
+<br><br><br>
+
+<p><strong>[ 작업지시 현황 ]</strong></p>
+<input type="button" value="LOAD" style = "float:right" onclick="work_load();"><br><br>
+<p align ="right"><select id='works' name='works' size='10' onchange='work_selected()' >
+	<option value='' selected>──── S E L E C T ────</option>
+	
+	<!-- <option value='apple'>작업작업</option> 
+-->
+    </select>  </p>
+    <p align="right"><input type="button" value="　DELETE　" style = "float:right" onclick="work_Delete();"></p>
+
+    </div>
+</form>
+
+			
+
+		<!-- Scripts -->
+			<script src="assets/js/jquery.min.js"></script>
+			<script src="assets/js/jquery.dropotron.min.js"></script>
+			<script src="assets/js/browser.min.js"></script>
+			<script src="assets/js/breakpoints.min.js"></script>
+			<script src="assets/js/util.js"></script>
+			<script src="assets/js/main.js"></script>
+			
+
+	</body>
+</html>

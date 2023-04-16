@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.helmetproject.mapper.WorkMapper">
+
+    <resultMap id="UserInfo" type="com.example.helmetproject.dto.User">
+        <result property="helmetId" column="helmet_id"/>
+        <result property="userId" column="user_id"/>
+    </resultMap>
+
+    <insert id="inputWorker" parameterType="com.example.helmetproject.dto.WorkUserDto">
+        INSERT INTO workinguser (
+            helmet_id,
+            user_id
+        )
+        values (#{helmetId},
+                #{userId}
+               )
+    </insert>
+
+    <update id="userInputConditionUpdate">
+        UPDATE user
+        SET user_work_condition = #{helmetId}
+        where user_id = #{userId}
+    </update>
+
+    <update id="helmetInputConditionUpdate">
+        UPDATE helmets
+        SET helmet_condition = #{userId}
+        where helmet_id = #{helmetId}
+    </update>
+
+    <select id="getWorker" parameterType="com.example.helmetproject.dto.WorkUserDto" resultType="Map">
+        SELECT *
+        FROM workinguser
+    </select>
+
+    <delete id="deleteWorker">
+        DELETE from workinguser
+        WHERE user_id = #{userId}
+    </delete>
+
+    <update id="userDeleteConditionUpdate">
+        UPDATE user
+        SET user_work_condition = 0
+    </update>
+
+    <update id="helmetDeleteConditionUpdate">
+        UPDATE helmets
+        SET helmet_condition = 0
+    </update>
+</mapper>

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.helmetproject.mapper.LiveMapper">
+
+    <resultMap id="liveDataInfo" type="com.example.helmetproject.dto.LiveData">
+        <result property="helmetId" column="helmet_Id"/>
+        <result property="userName" column="user_name"/>
+        <result property="workLocation" column="work_location"/>
+        <result property="shockPosition" column="shock_position"/>
+        <result property="shock" column="shock"/>
+        <result property="wearingInfo" column="wearing_info"/>
+        <result property="locationX" column="location_x"/>
+        <result property="locationY" column="location_y"/>
+    </resultMap>
+
+    <!--  헬멧 등록  -->
+    <insert id="inputData" parameterType="com.example.helmetproject.dto.LiveData">
+        INSERT INTO livedata (
+            helmet_id,
+            user_name,
+            work_location,
+            shock_position,
+            shock,
+            wearing_info,
+            location_x,
+            location_y
+        )
+        values (#{helmetId},
+                #{userName},
+                #{workLocation},
+                #{shockPosition},
+                #{shock},
+                #{wearingInfo},
+                #{locationX},
+                #{locationY}
+               )
+    </insert>
+
+
+
+    <select id="getAllData" resultMap="liveDataInfo">
+        SELECT *
+        FROM livedata
+    </select>
+
+</mapper>

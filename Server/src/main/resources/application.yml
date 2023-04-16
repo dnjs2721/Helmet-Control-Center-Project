@@ -1,0 +1,12 @@
+spring:
+ port: 8080
+ datasource:
+   driver-class-name: org.mariadb.jdbc.Driver
+   url: jdbc:mysql://220.81.42.179:3306/helmet
+   username: jeong
+   password: jh9014
+
+mybatis:
+    type-aliases-package: com.example.mappertut.model
+    mapper-locations: mybatis-mapper/*.xml
+    configuration.map-underscore-to-camel-case: true
